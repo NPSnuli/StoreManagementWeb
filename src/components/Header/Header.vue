@@ -2,8 +2,10 @@
     <div class="header">
         <div class="content">
             <div class="left">
-                <el-icon :size="38"><Fold /></el-icon>
-                <el-icon :size="38"><Refresh /></el-icon>
+                <el-icon v-if="!useState.collapse" :size="38" @click="collapseToggle"><Fold /></el-icon>
+                <el-icon v-else :size="38" @click="collapseToggle"><Expand /></el-icon>
+
+                <el-icon :size="38" @click="refreshHandle" class="refresh"><Refresh /></el-icon>
             </div>
 
             <div :span="11" class="right">
@@ -14,6 +16,16 @@
 </template>
 
 <script setup>
+import {useStateStores} from '@/stores/stateStores'
+
+const useState = useStateStores()
+
+const {collapseToggle} = useState
+
+const refreshHandle = () => {
+    location.reload()
+}
+
 defineOptions({
     name: "Header"
 })
@@ -31,6 +43,11 @@ defineOptions({
 
             * {
                 @apply ml-3 ;
+            }
+
+            .el-icon {
+                @apply cursor-pointer;
+                @apply transition origin-center ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300;
             }
         }
     

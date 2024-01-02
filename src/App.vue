@@ -1,6 +1,6 @@
 <template>
   <el-container class="container2">
-    <Aside style="width: 200px; height: 100vh"></Aside>
+    <Aside style="height: 100vh"></Aside>
     <el-container>
       <el-header>
         <Header />
@@ -23,6 +23,19 @@ import Aside from '@/components/Aside/index.vue'
 import Header from '@/components/Header/Header.vue'
 import Main from '@/components/Main/Main.vue'
 import Footer from '@/components/Footer/Footer.vue'
+import { useStateStores } from '@/stores/stateStores'
+import { getTokenData, setTokenData } from '@/network/localStores'
+
+const useState = useStateStores()
+
+const { login } = useState
+
+if (getTokenData() == null) {
+  login("admin", "admin")
+    .then(() => {
+      setTokenData(useState.token)
+    })
+}
 </script>
 
 <style scoped>

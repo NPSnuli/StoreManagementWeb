@@ -1,22 +1,18 @@
 <template>
-  <el-aside class="aside" style="height: 100vh">
+  <el-aside class="aside" :style="['height:100vh', `width:${collapse ? 60 : 200}px`]">
     <div class="banner">
       <div class="logo">
         <font-awesome-icon class="svg" :icon="['fas', 'cart-shopping']" />
-        <span class="text">商城管理系统</span>
+        <span v-if="!collapse" class="text" @click="clickHandle">商城管理系统</span>
       </div>
     </div>
-    <el-menu class="el-menu-vertical-demo" :router="true">
+    <el-menu class="el-menu-vertical-demo" :default-active="useState.activePage" :router="true" :collapse="collapse" :collapse-transition="true" @select="selectActivePage">
       <el-sub-menu v-for="(item, index) in menuList" :key="index" :index="`${index}`">
         <template #title>
           <component :is="item.icon" :size="16" class="icons"></component>
           <span>{{ item.name }}</span>
         </template>
-        <el-menu-item
-          v-for="(children, cindex) in item.children"
-          :key="cindex"
-          :index="children.path"
-        >
+        <el-menu-item v-for="(children, cindex) in item.children" :key="cindex" :index="children.path">
           <component :is="children.icon" :size="16" class="icons"></component>
           <span>{{ children.name }}</span>
         </el-menu-item>
@@ -26,8 +22,26 @@
 </template>
 
 <script setup lang="js">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { Document, Menu as IconMenu, Location, Setting } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router'
+import {useStateStores} from '@/stores/stateStores'
+
+const useState = useStateStores()
+
+const router = useRouter()
+
+const collapse = computed(() => useState.collapse)
+
+const selectActivePage = (index, indexPath, item, routeResult) => {
+  // console.log(index);
+  useState.setActivePage(index)
+}
+
+const clickHandle = () => {
+  router.replace("/")
+  useState.setActivePage("")
+}
 
 const menuList = ref([
   {
@@ -43,6 +57,16 @@ const menuList = ref([
         name: '商品分类',
         icon: 'Menu',
         path: '/goodcategory'
+      },
+      {
+        name: '规格管理',
+        icon: 'Aim',
+        path: '/goodCatgoryManager'
+      },
+      {
+        name: '优惠券管理',
+        icon: 'Ticket',
+        path: '/ticketManager'
       }
     ]
   },
@@ -83,7 +107,7 @@ const menuList = ref([
 
 <style scoped lang="scss">
 .aside {
-  @apply bg-white shadow-2xl border-0 rounded-lg;
+  @apply bg-white shadow-2xl border-0 rounded-lg transition-all ease-out delay-150 duration-300;
 }
 
 .banner {
@@ -91,18 +115,19 @@ const menuList = ref([
 
   .logo {
     @apply py-5 px-2;
+
     .svg {
       @apply flex-initial shrink w-7 text-sky-500;
     }
 
     .text {
-      @apply flex-initial w-72 text-2xl font-bold text-sky-500;
+      @apply flex-initial w-72 text-2xl font-bold text-sky-500 cursor-pointer;
     }
   }
 }
 
 .el-menu {
-  @apply border-none text-lg font-bold;
+  @apply border-none text-lg font-bold ;
 
   .icons {
     @apply w-[20px] h-[20px] mr-2;
@@ -119,7 +144,7 @@ const menuList = ref([
   }
 
   .el-menu-item {
-    @apply px-8 mx-3 hover:rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300;
+    @apply px-8 mx-3 hover:rounded-lg transition ease-in-out delay-150 hover:-translate-y-3 hover:scale-110 duration-300;
 
     &.is-active {
       @apply rounded-lg shadow-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white;
