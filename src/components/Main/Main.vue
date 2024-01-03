@@ -10,10 +10,4 @@ defineOptions({
 })
 </script>
 
-<style scoped lang="scss">
-#main {
-  @apply z-0 bg-white backdrop-blur-md shadow-2xl border-0 rounded-lg p-3;
-  width: 87vw;
-  height: 83vh;
-}
-</style>
+<style scoped lang="scss"></style>

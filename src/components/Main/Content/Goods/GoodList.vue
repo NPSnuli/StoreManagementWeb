@@ -13,7 +13,7 @@
     <div class="form-box">
       <el-form inline class="form">
         <el-form-item label="关键词">
-          <el-input v-model.trim="searchValue"/>
+          <el-input v-model.trim="searchValue" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="SearchClickHandle">搜索</el-button>
@@ -36,7 +36,7 @@
                   <el-divider direction="vertical" />
                   <span class="shopPrice2">{{ `￥${scope.row.min_oprice}` }}</span>
                 </p>
-                <p class="shopCatergory">{{ `分类:${scope.row.category.name}` }}</p>
+                <p class="shopCatergory">{{ `分类:${scope.row.category?.name}` }}</p>
                 <p class="shopDate">{{ `创建时间:${scope.row.create_time}` }}</p>
               </div>
             </div>
@@ -74,34 +74,35 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import {useStateStores} from '@/stores/stateStores'
+import { useStateStores } from '@/stores/stateStores'
 
 const useState = useStateStores()
 
-const {getGoods} = useState
+const { getGoods } = useState
 
-const tabValue = ref("all")
+const tabValue = ref('all')
 
-const searchValue = ref("")
+const searchValue = ref('')
 
-getGoods("all", null, null, null, 1)
+getGoods('all', null, null, null, 1)
 
-const tableData = computed(() => useState.shopList
-//   [
-//   {
-//     shop: {
-//       name: '小米14 pro',
-//       xianzaiPrice: '0.06',
-//       yuanPrice: '10.00',
-//       type: '家具生活',
-//       date: new Date().toLocaleString()
-//     },
-//     shopCount: 120,
-//     shopState: 2,
-//     shengheState: 2,
-//     total: 300
-//   }
-// ]
+const tableData = computed(
+  () => useState.shopList
+  //   [
+  //   {
+  //     shop: {
+  //       name: '小米14 pro',
+  //       xianzaiPrice: '0.06',
+  //       yuanPrice: '10.00',
+  //       type: '家具生活',
+  //       date: new Date().toLocaleString()
+  //     },
+  //     shopCount: 120,
+  //     shopState: 2,
+  //     shengheState: 2,
+  //     total: 300
+  //   }
+  // ]
 )
 
 const tabs = ref([
@@ -156,7 +157,7 @@ const SearchClickHandle = () => {
   }
 }
 .table-container {
-  @apply h-full;
+  // @apply h-full;
   .shopList {
     @apply flex flex-row;
     .image {
@@ -168,7 +169,7 @@ const SearchClickHandle = () => {
       overflow: hidden;
 
       .shopName {
-        @apply text-gray-800 ;
+        @apply text-gray-800;
       }
 
       .shopPrice1 {
@@ -187,7 +188,7 @@ const SearchClickHandle = () => {
   }
 }
 .pages {
-  @apply w-full h-full flex flex-row justify-center mt-5;
+  @apply w-full flex flex-row justify-center mt-5;
 
   .pagination {
     @apply justify-center;

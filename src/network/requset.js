@@ -1,11 +1,11 @@
 import axios from 'axios'
-import {getTokenData} from './localStores'
+import { getTokenData, clearTokenData } from './localStores'
 
 const axiosInstance = axios.create({
   baseURL: '/api',
   timeout: 5000,
   headers: {
-    token: ""
+    token: ''
   }
 })
 
@@ -24,6 +24,10 @@ axiosInstance.interceptors.response.use(
     return res.data
   },
   (err) => {
+    const data = err.response.data
+    if (data && data.msg && data.msg.includes('非法token')) {
+      clearTokenData()
+    }
     return Promise.reject(err)
   }
 )
