@@ -64,6 +64,42 @@ export const useStateStores = defineStore('stateStore', {
           })
       })
     },
+    // state = 1新增， state = 2修改,  state = 3删除
+    goods(state = 1, opt = {}) {
+      return new Promise((resolve, rejects) => {
+        let url = '/goods'
+        switch (state) {
+          case 2:
+            url = `/goods/${opt?.id}`
+            break
+          case 3:
+            url = '/goods/delete_all'
+            break
+        }
+        reuqest
+          .post(url, {
+            title: opt?.title,
+            category_id: opt?.category_id,
+            cover: opt?.cover,
+            desc: opt?.desc,
+            unit: opt?.unit,
+            stock: opt?.stock,
+            min_stock: opt?.min_stock,
+            status: opt?.status,
+            stock_display: opt?.stock_display,
+            min_price: opt?.min_price,
+            min_oprice: opt?.min_oprice,
+            content: opt?.content,
+            ids: opt?.ids
+          })
+          .then((res) => {
+            resolve()
+          })
+          .catch((err) => {
+            rejects()
+          })
+      })
+    },
     getCategory() {
       return new Promise((resolve, rejects) => {
         reuqest

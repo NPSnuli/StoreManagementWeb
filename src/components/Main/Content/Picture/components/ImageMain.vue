@@ -12,7 +12,7 @@
             <el-image
               :src="item.url"
               fit="cover"
-              class="h-[150px]"
+              class="imageContent"
               style="width: 100%"
               :preview-src-list="[item.url]"
               :initial-index="0"
@@ -191,5 +191,8 @@ defineExpose({
   left: -1px;
   right: -1px;
   @apply text-sm truncate text-gray-100 bg-opacity-50 bg-gray-800 px-2 py-1;
+}
+.imageContent {
+  @apply h-[150px];
 }
 </style>

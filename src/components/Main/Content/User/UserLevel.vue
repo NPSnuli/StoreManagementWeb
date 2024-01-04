@@ -65,7 +65,7 @@
         </el-form-item>
         <el-form-item label="升级条件">
           <div>
-            <small class="text-xs mr-2">累计消费满</small>
+            <small class="label_speed">累计消费满</small>
             <el-input
               type="number"
               v-model="form.max_price"
@@ -74,12 +74,12 @@
             >
               <template #append>元</template>
             </el-input>
-            <small class="text-gray-400 flex">
+            <small class="label_speed_total">
               设置会员等级所需要的累计消费必须大于等于0,单位：元
             </small>
           </div>
           <div>
-            <small class="text-xs mr-2">累计次数满</small>
+            <small class="label_speed">累计次数满</small>
             <el-input
               type="number"
               v-model="form.max_times"
@@ -88,7 +88,7 @@
             >
               <template #append>%</template>
             </el-input>
-            <small class="text-gray-400 flex">
+            <small class="label_speed_total">
               设置会员等级所需要的购买量必须大于等于0,单位：笔
             </small>
           </div>
@@ -156,6 +156,13 @@ const { formDrawerRef, formRef, form, rules, drawerTitle, handleSubmit, handleCr
 </script>
 
 <style scoped lang="scss">
+.label_speed {
+  @apply text-xs mr-2;
+}
+.label_speed_total {
+  @apply text-gray-400 flex;
+}
+
 .pages {
   @apply w-full flex flex-row justify-center mt-5;
 
