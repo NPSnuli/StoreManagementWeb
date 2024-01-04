@@ -152,7 +152,7 @@ import { ref, computed, reactive } from 'vue'
 import { useStateStores } from '@/stores/stateStores'
 import ChooseImage from '@/components/Main/Content/Picture/components/ChooseImage.vue'
 import { toast } from './util/util.js'
-import FormDrawer from './components/FormDrawer.vue.vue'
+import FormDrawer from './components/FormDrawer.vue'
 
 const useState = useStateStores()
 

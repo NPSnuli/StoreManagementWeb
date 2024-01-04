@@ -8,6 +8,7 @@ export const useStateStores = defineStore('stateStore', {
     cates: [],
     shopList: [],
     categoryList: [],
+    CategoryItemList: [],
     totalSize: 0,
     collapse: false,
     activePage: localStorage.getItem('index') ?? ''
@@ -144,6 +145,52 @@ export const useStateStores = defineStore('stateStore', {
           })
           .catch((err) => {
             rejects(err)
+          })
+      })
+    },
+    getCategoryItemList(id) {
+      return new Promise((resolve, rejects) => {
+        reuqest
+          .get('/app_category_item/list', {
+            params: {
+              category_id: id
+            }
+          })
+          .then((res) => {
+            const data = res.data
+            if (!data) return
+            this.CategoryItemList = data
+            resolve()
+          })
+          .catch((err) => {
+            rejects()
+          })
+      })
+    },
+    removeCategoryItemList(id) {
+      return new Promise((resolve, rejects) => {
+        reuqest
+          .post(`/app_category_item/${id}/delete`)
+          .then((res) => {
+            resolve()
+          })
+          .catch((err) => {
+            rejects()
+          })
+      })
+    },
+    guanlianCategoryItem(opt = {}) {
+      return new Promise((resolve, rejects) => {
+        reuqest
+          .post(`/app_category_item`, {
+            category_id: opt?.category_id,
+            goods_ids: opt?.goods_ids
+          })
+          .then((res) => {
+            resolve()
+          })
+          .catch((err) => {
+            rejects()
           })
       })
     }
