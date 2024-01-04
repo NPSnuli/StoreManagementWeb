@@ -7,8 +7,22 @@
     <div class="container">
       <form action="#" class="login-form">
         <h2>登录</h2>
-        <input type="text" v-model.trim="formLabelAlign.name" placeholder="用户名" />
-        <input type="password" v-model.trim="formLabelAlign.passwd" placeholder="密码" />
+        <input
+          type="text"
+          id="username"
+          autocomplete="username"
+          v-model.trim="formLabelAlign.name"
+          placeholder="用户名"
+          required
+        />
+        <input
+          type="password"
+          id="password"
+          autocomplete="current-password"
+          v-model.trim="formLabelAlign.passwd"
+          placeholder="密码"
+          required
+        />
         <button type="submit" @click="submitHandle">登录</button>
       </form>
     </div>
