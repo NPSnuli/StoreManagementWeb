@@ -2,11 +2,17 @@ export const ACCESS_TOKEN = 'token'
 
 export const logout = () => {
   clearTokenData()
-  location.reload()
 }
 
 export const clearTokenData = () => {
   localStorage.clear()
+  location.reload()
+}
+
+export const getToken = () => {
+  const value = localStorage.getItem(ACCESS_TOKEN)
+  if (!value) clearTokenData()
+  return value
 }
 
 export const getTokenData = () => {
